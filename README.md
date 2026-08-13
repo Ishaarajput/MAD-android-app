@@ -316,7 +316,7 @@ Don't have an account? Register
 
 **Screenshot:**
 
-![Test Case 1 - Login Page](./Screenshots/test-case-1-login.png)
+![Test Case 1 - Login Page](./screenshots/test-case-1-login.png)
 
 ---
 
@@ -348,7 +348,7 @@ Welcome, Isha!
 
 **Screenshot:**
 
-![Test Case 2 - Login and Navigation](./Screenshots/test-case-2-validation.png)
+![Test Case 2 - Login and Navigation](./screenshots/test-case-2-validation.png)
 
 ---
 
@@ -382,7 +382,7 @@ USN: 25MCAR0098
 
 **Screenshot:**
 
-![Test Case 3 - Personalized Welcome with USN](./Screenshots/test-case-3-usn.png)
+![Test Case 3 - Personalized Welcome with USN](./screenshots/test-case-3-usn.png)
 
 ---
 
@@ -406,7 +406,7 @@ Welcome, Isha!
 
 ### Output Screenshot
 
-![Application Output](./Screenshots/output.png)
+![Application Output](./screenshots/output.png)
 
 ---
 
