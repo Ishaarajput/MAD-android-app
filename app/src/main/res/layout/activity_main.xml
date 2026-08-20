@@ -6,54 +6,84 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:gravity="center"
-    android:padding="30dp">
+    android:padding="28dp"
+    android:background="#F5F7FB">
 
+    <!-- Welcome Title -->
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Login"
+        android:text="Welcome Back"
         android:textSize="32sp"
         android:textStyle="bold"
-        android:layout_marginBottom="40dp"/>
+        android:textColor="#172554"
+        android:layout_marginBottom="8dp"/>
 
+    <!-- Subtitle -->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Login to continue"
+        android:textSize="16sp"
+        android:textColor="#64748B"
+        android:layout_marginBottom="35dp"/>
+
+    <!-- Username -->
     <EditText
         android:id="@+id/usernameEditText"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="55dp"
         android:hint="Username"
+        android:textSize="16sp"
+        android:paddingStart="18dp"
+        android:paddingEnd="18dp"
+        android:background="#FFFFFF"
         android:inputType="text"
-        android:padding="15dp"/>
+        android:layout_marginBottom="15dp"/>
 
+    <!-- Password -->
     <EditText
         android:id="@+id/passwordEditText"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="55dp"
         android:hint="Password"
-        android:inputType="textPassword"
-        android:padding="15dp"
-        android:layout_marginTop="15dp"/>
+        android:textSize="16sp"
+        android:paddingStart="18dp"
+        android:paddingEnd="18dp"
+        android:background="#FFFFFF"
+        android:inputType="textPassword"/>
 
-    <Button
-        android:id="@+id/loginButton"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Login"
-        android:layout_marginTop="25dp"/>
-
+    <!-- Forgot Password -->
     <TextView
         android:id="@+id/forgotPasswordText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Forgot Password?"
-        android:textSize="16sp"
-        android:layout_marginTop="20dp"/>
+        android:textSize="14sp"
+        android:textColor="#2563EB"
+        android:layout_gravity="end"
+        android:layout_marginTop="12dp"/>
 
+    <!-- Login Button -->
+    <Button
+        android:id="@+id/loginButton"
+        android:layout_width="match_parent"
+        android:layout_height="55dp"
+        android:text="Login"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        android:textColor="#FFFFFF"
+        android:backgroundTint="#2563EB"
+        android:layout_marginTop="25dp"/>
+
+    <!-- Register -->
     <TextView
         android:id="@+id/registerText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Don't have an account? Register"
-        android:textSize="16sp"
-        android:layout_marginTop="15dp"/>
+        android:textSize="15sp"
+        android:textColor="#475569"
+        android:layout_marginTop="25dp"/>
 
 </LinearLayout>

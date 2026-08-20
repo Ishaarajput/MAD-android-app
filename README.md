@@ -1,249 +1,214 @@
-# Experiment 4 – Android Login and Home Page Navigation
+Experiment 5 – Android Notifications
 
-**Name:** Isha Kumari  
-**USN:** 25MCAR0098  
-**Experiment:** 4  
-**Topic:** Design and Implement a Login Page with Navigation to Home Page  
-**Technology:** Android Studio, Kotlin, XML, Android SDK
+Name: Isha Kumari
+USN: 25MCAR0098
+Experiment: 5
+Topic: Create an Android Application to Display Notifications
+Technology: Android Studio, Kotlin, XML, Android SDK
 
----
+1. Aim
 
-## 1. Aim
+To create and implement an Android application that displays notifications when the user interacts with the application.
 
-To design and implement a simple Android login application using Kotlin and XML that contains a username field, password field, login button, Forgot Password option, and registration option. On successful login input, the application navigates to a Home page and displays a personalized welcome message using the entered username.
+2. Objectives
 
----
+Understand the concept of Android Notifications.
 
-## 2. Objective
+Create and display a notification using Kotlin.
 
-The objectives of this experiment are:
+Understand the use of Notification Channels.
 
-- To design a proper Login User Interface in Android.
-- To use `EditText` for accepting username and password.
-- To use a `Button` for handling the login action.
-- To navigate from one Activity to another using `Intent`.
-- To pass the entered username from the Login Activity to the Home Activity.
-- To display a personalized welcome message on the Home page.
-- To understand the relationship between XML UI and Kotlin logic.
-- To understand basic Activity navigation in Android.
+Handle notification permission on Android 13 and above.
 
----
+Trigger a notification using a button click.
 
-## 3. Concept / Technology
+Observe the notification in the Android notification panel.
 
-This experiment demonstrates basic Android application development using **Kotlin, XML, Android Studio, Activities, and Intent**.
+3. Concept / Technology
 
-### Android Studio
+What is an Android Notification?
 
-Android Studio is the official Integrated Development Environment (IDE) used for Android application development. It provides tools for writing code, designing interfaces, running applications, debugging, and testing applications using an emulator or physical device.
+A Notification is a message displayed by an Android application outside its normal user interface. Notifications are used to inform users about important events, updates, reminders, messages, or actions.
 
-### Kotlin
+In this experiment, a notification is generated when the user clicks the Show Notification button on the Home screen.
 
-Kotlin is the programming language used to implement the application logic. In this experiment, Kotlin handles the login button click and navigation between Activities.
+Technologies Used
 
-### XML
+Technology / Component
 
-XML is used to design the user interface of the application. The Login page contains TextViews, EditTexts, and a Button.
+Purpose
 
-### Activity
+Android Studio
 
-An Activity represents a screen of an Android application.
+Development environment for building the Android application
 
-This experiment uses two Activities:
+Kotlin
 
-```text
-MainActivity
+Programming language used to implement the application logic
+
+XML
+
+Used to design the application user interface
+
+Android SDK
+
+Provides APIs and tools required for Android development
+
+NotificationChannel
+
+Used to create and manage notification channels
+
+NotificationCompat
+
+Used to build notifications compatible with different Android versions
+
+NotificationManagerCompat
+
+Used to display notifications
+
+POST_NOTIFICATIONS
+
+Permission required for notifications on Android 13 and above
+
+4. Scenario Used
+
+This experiment is implemented as an extension of the existing LoginApp application created in the previous experiment.
+
+The application follows this flow:
+
+The user opens the LoginApp.
+
+The user enters the username and password.
+
+After clicking the Login button, the user is taken to the Home screen.
+
+The Home screen displays a welcome message containing the username.
+
+The Home screen also contains a Show Notification button.
+
+When the user clicks the button, the application displays an Android notification.
+
+The notification can be viewed by opening the notification panel.
+
+Application Flow
+
+Login Screen
      ↓
-Login Page
-
-HomeActivity
+Enter Username and Password
      ↓
-Home Page
-```
+Click Login
+     ↓
+Home Screen
+     ↓
+Click "Show Notification"
+     ↓
+Check Notification Permission
+     ↓
+Create Notification Channel
+     ↓
+Build Notification
+     ↓
+Display Notification
+     ↓
+View Notification in Notification Panel
 
-### Intent
+5. Implementation
 
-An Intent is used to move from one Activity to another.
+The notification functionality was implemented in HomeActivity.kt.
 
-In this experiment, an Intent is also used to pass the username from the Login Activity to the Home Activity.
+5.1 Notification Permission
 
-Example:
+For Android 13 and above, applications need notification permission before displaying notifications.
 
-```kotlin
-val intent = Intent(this, HomeActivity::class.java)
-intent.putExtra("username", enteredUsername)
-startActivity(intent)
-```
+The following permission was added to AndroidManifest.xml:
 
----
+<uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
 
-## 4. Scenario Used
+The application checks whether the notification permission has been granted before displaying the notification.
 
-A simple login application is developed for demonstrating Android UI design and Activity navigation.
+5.2 Notification Channel
 
-The Login page contains:
+Android 8.0 and above requires notifications to be associated with a notification channel.
 
-- Username field
-- Password field
-- Login button
-- Forgot Password option
-- Registration option
+The application creates a notification channel using the following code:
 
-The Forgot Password and Registration options are provided as UI options only. No backend, database, or actual authentication system is implemented because the purpose of this experiment is to demonstrate the Android interface and Activity navigation.
+private val channelId = "loginapp_channel"
 
-### Application Flow
+private fun createNotificationChannel() {
 
-```text
-              LOGIN PAGE
-                  │
-        ┌─────────┼──────────┐
-        │         │          │
-     Username  Password   Options
-        │         │       Forgot Password
-        │         │       Register
-        └────┬────┘
-             │
-        Login Button
-             ↓
-        HomeActivity
-             ↓
-     Welcome, Username!
-```
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
 
-For example, if the user enters:
+        val channel = NotificationChannel(
+            channelId,
+            "LoginApp Notifications",
+            NotificationManager.IMPORTANCE_HIGH
+        )
 
-```text
-Username: Isha
-Password: 1234
-```
+        val manager = getSystemService(NotificationManager::class.java)
 
-and clicks Login, the Home page displays:
+        manager.createNotificationChannel(channel)
+    }
+}
 
-```text
-Welcome, Isha!
-```
+The notification channel allows Android to manage the behavior and importance of notifications generated by the application.
 
----
+5.3 Notification Button
 
-## 5. User Interface
-
-### Login Page
-
-The Login page contains:
-
-```text
-          Login
-
-     Username
-   ┌───────────────┐
-   │               │
-   └───────────────┘
-
-     Password
-   ┌───────────────┐
-   │               │
-   └───────────────┘
-
-       [ Login ]
-
-     Forgot Password?
-
- Don't have an account?
-        Register
-```
-
-### Home Page
-
-After clicking Login, the application navigates to:
-
-```text
-       Welcome!
-
-    Welcome, Isha!
-```
-
----
-
-## 6. Implementation
-
-### Login UI
-
-The Login interface is implemented using XML.
-
-Important components include:
-
-```xml
-<EditText
-    android:id="@+id/usernameEditText"
-    ...
-    android:hint="Username" />
-
-<EditText
-    android:id="@+id/passwordEditText"
-    ...
-    android:hint="Password" />
+A Show Notification button was added to activity_home.xml.
 
 <Button
-    android:id="@+id/loginButton"
-    ...
-    android:text="Login" />
-```
+    android:id="@+id/notificationButton"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:text="Show Notification"
+    android:layout_marginTop="20dp" />
 
-The username and password fields allow the user to enter login information.
+The button is connected to the notification function in HomeActivity.kt:
 
----
-
-### Login Button Functionality
-
-The Login button is handled in `MainActivity.kt`.
-
-```kotlin
-loginButton.setOnClickListener {
-
-    val enteredUsername = username.text.toString()
-
-    val intent = Intent(this, HomeActivity::class.java)
-
-    intent.putExtra("username", enteredUsername)
-
-    startActivity(intent)
+notificationButton.setOnClickListener {
+    showNotification()
 }
-```
 
-When the Login button is clicked, the entered username is stored in a variable and passed to `HomeActivity`.
+When the user clicks the button, the showNotification() method is executed.
 
----
+5.4 Displaying the Notification
 
-### Receiving Username in HomeActivity
+The notification is created using NotificationCompat.Builder.
 
-The Home Activity receives the username using:
+val notification = NotificationCompat.Builder(this, channelId)
+    .setSmallIcon(android.R.drawable.ic_dialog_info)
+    .setContentTitle("LoginApp")
+    .setContentText("Hello! Your notification is working.")
+    .setPriority(NotificationCompat.PRIORITY_HIGH)
+    .setAutoCancel(true)
+    .build()
 
-```kotlin
-val username = intent.getStringExtra("username")
-```
+NotificationManagerCompat
+    .from(this)
+    .notify(1001, notification)
 
-The username is then displayed:
+Explanation
 
-```kotlin
-welcomeText.text = "Welcome, $username!"
-```
+setSmallIcon() sets the notification icon.
 
-Therefore, if the entered username is `Isha`, the Home page displays:
+setContentTitle() sets the notification title.
 
-```text
-Welcome, Isha!
-```
+setContentText() sets the notification message.
 
----
+setPriority() specifies the importance of the notification.
 
-## 7. Project Folder and File Structure
+setAutoCancel(true) removes the notification when the user taps it.
 
-```text
-Experiment4/
+notify() sends the notification to the Android notification system.
+
+6. Project Folder and File Structure
+
+LoginApp/
 │
 ├── app/
 │   └── src/
 │       └── main/
+│           │
 │           ├── java/
 │           │   └── com/
 │           │       └── example/
@@ -252,220 +217,230 @@ Experiment4/
 │           │               └── HomeActivity.kt
 │           │
 │           ├── res/
-│           │   └── layout/
-│           │       ├── activity_main.xml
-│           │       └── activity_home.xml
+│           │   ├── layout/
+│           │   │   ├── activity_main.xml
+│           │   │   └── activity_home.xml
+│           │   │
+│           │   ├── drawable/
+│           │   ├── mipmap/
+│           │   ├── values/
+│           │   └── xml/
 │           │
 │           └── AndroidManifest.xml
 │
-├── Screenshots/
-│   ├── output.png
-│   ├── test-case-1-login.png
-│   ├── test-case-2-validation.png
-│   └── test-case-3-usn.png
+├── Gradle Scripts/
 │
-├── build.gradle / build.gradle.kts
-├── settings.gradle / settings.gradle.kts
+├── Screenshots/
+│   ├── test-case-1-home.png
+│   ├── test-case-2-permission.png
+│   ├── test-case-3-notification.png
+│   └── output.png
+│
 └── README.md
-```
 
-### Important Files
+Important Files
 
-- **`MainActivity.kt`** – Contains the login page logic and navigation to HomeActivity.
-- **`HomeActivity.kt`** – Receives the username and displays the welcome message.
-- **`activity_main.xml`** – Contains the Login page UI.
-- **`activity_home.xml`** – Contains the Home page UI.
-- **`AndroidManifest.xml`** – Contains Activity configuration.
-- **`README.md`** – Contains documentation of the experiment.
-- **`Screenshots/`** – Contains output and test case screenshots.
+File
 
----
+Description
 
-# 8. Test Cases
+MainActivity.kt
 
-## Test Case 1 – Login Page Display
+Handles the Login screen and login functionality
 
-**Objective:** Verify that the Login page displays all required UI components.
+HomeActivity.kt
 
-### Steps
+Displays the Home screen and handles notification functionality
 
-1. Run the application.
-2. Observe the Login page.
-3. Check for the Username field.
-4. Check for the Password field.
-5. Check the Login button.
-6. Check the Forgot Password option.
-7. Check the Registration option.
+activity_main.xml
 
-### Expected Result
+Defines the Login screen user interface
 
-The Login page should display:
+activity_home.xml
 
-```text
-Login
+Defines the Home screen and Show Notification button
 
-Username
-Password
+AndroidManifest.xml
 
-[ Login ]
+Contains application configuration and notification permission
 
-Forgot Password?
+README.md
 
-Don't have an account? Register
-```
+Contains documentation of the experiment
 
-**Screenshot:**
+7. Test Cases
 
-![Test Case 1 - Login Page](./screenshots/test-case-1-login.png)
+Test Case 1 – Show Notification Button
 
----
+Objective:
+To verify that the Show Notification button is available on the Home screen.
 
-## Test Case 2 – Login and Navigation
+Steps:
 
-**Objective:** Verify that clicking the Login button navigates to the Home page and displays the entered username.
+Launch the LoginApp.
 
-### Steps
+Enter the username and password.
 
-1. Enter a username.
-2. Enter a password.
-3. Click the Login button.
-4. Observe the Home page.
+Click the Login button.
 
-### Test Data
+Verify that the Home screen is displayed.
 
-```text
-Username: Isha
-Password: 1234
-```
+Check for the Show Notification button.
 
-### Expected Result
+Expected Result:
 
-The application should navigate to the Home page and display:
-
-```text
-Welcome, Isha!
-```
+The Home screen should display the welcome message and the Show Notification button.
 
 **Screenshot:**
 
-![Test Case 2 - Login and Navigation](./screenshots/test-case-2-validation.png)
+![Test Case 1 - Home Screen](./Screenshots/test-case-1-home.png)
 
----
 
-## Test Case 3 – Student Details and Personalized Welcome
 
-**Objective:** Verify the personalized welcome message and demonstrate the student's name and USN.
+Test Case 2 – Notification Permission
 
-### Steps
+Objective:
+To verify that the application handles notification permission correctly on supported Android versions.
 
-1. Enter the student's name/username.
-2. Enter a password.
-3. Click Login.
-4. Observe the Home page.
-5. Verify the welcome message.
-6. Verify the student's name and USN in the submitted evidence.
+Steps:
 
-### Expected Result
+Launch the LoginApp.
 
-The Home page should display a personalized message such as:
+Login successfully.
 
-```text
-Welcome, Isha!
-```
+Navigate to the Home screen.
 
-The screenshot for this test case should also visibly show:
+Click the Show Notification button.
 
-```text
+If notification permission is requested, allow notification permission.
+
+Return to the application.
+
+Expected Result:
+
+The application should request notification permission when required.
+
+After permission is granted, LoginApp should be allowed to display notifications.
+**Screenshot:**
+
+![Test Case 2 - Notification Permission](./Screenshots/test-case-2-permission.png)Screenshot:
+
+
+
+Test Case 3 – Display Notification with Student Details
+
+Objective:
+To verify that the notification is successfully displayed in the Android notification panel and that the student's details are demonstrated.
+
+Steps:
+
+Open the LoginApp.
+
+Login successfully.
+
+Navigate to the Home screen.
+
+Click the Show Notification button.
+
+Swipe down from the top of the emulator to open the notification panel.
+
+Observe the LoginApp notification.
+
+Expected Result:
+
+The notification should appear in the Android notification panel.
+
+The notification should display:
+
+Title: LoginApp
+
+Message: Hello! Your notification is working.
+
+The test case screenshot should also show:
+
 Name: Isha Kumari
 USN: 25MCAR0098
-```
 
 **Screenshot:**
 
-![Test Case 3 - Personalized Welcome with USN](./screenshots/test-case-3-usn.png)
+![Test Case 3 - Notification](./Screenshots/test-case-3-notification.png)
 
----
 
-# 9. Output
 
-The final application consists of a Login page and a Home page.
+8. Output
 
-### Login Page
-
-The user enters the username and password and clicks the Login button.
-
-### Home Page
-
-The entered username is passed to the Home Activity and displayed in the welcome message.
-
-For example:
-
-```text
-Welcome, Isha!
-```
+After clicking the Show Notification button, the LoginApp notification is successfully displayed in the Android notification panel.
 
 ### Output Screenshot
 
-![Application Output](./screenshots/output.png)
+![Output - Android Notification](./Screenshots/output.png)
 
----
 
-# 10. Test Summary
 
-| Test Case | Scenario | Expected Result | Result |
-|---|---|---|---|
-| TC1 | Open Login page | All Login UI components are displayed | Pass |
-| TC2 | Enter username/password and click Login | Home page opens with username | Pass |
-| TC3 | Personalized welcome and student details | Username, Name and USN are demonstrated | Pass |
+9. Test Summary
 
----
+Test Case
 
-# 11. Limitations
+Action
 
-This experiment is intentionally implemented without a backend.
+Expected Result
 
-Therefore:
+Result
 
-- No real user authentication is performed.
-- Passwords are not stored.
-- No database is connected.
-- Registration is only provided as a UI option.
-- Forgot Password is only provided as a UI option.
-- User credentials are not verified against a server.
+TC1
 
-The purpose is to demonstrate Android UI design, Activity navigation, and passing data between Activities.
+Open Home screen
 
----
+Show Notification button is visible
 
-# 12. Learning Outcome
+Pass
+
+TC2
+
+Click Show Notification without permission
+
+Notification permission is requested when required
+
+Pass
+
+TC3
+
+Click Show Notification after permission
+
+Notification appears in the notification panel
+
+Pass
+
+10. Learning Outcomes
 
 After completing this experiment, I understood:
 
-- How to create a Login UI using XML.
-- How to use `EditText`, `TextView`, and `Button`.
-- How Kotlin interacts with XML UI components.
-- How to handle a Button click using `setOnClickListener()`.
-- How to use Intent for Activity navigation.
-- How to pass data between Activities.
-- How to display dynamic data on another Activity.
-- How to test an Android application using an emulator.
+The concept of Android Notifications.
 
----
+How to create a Notification Channel.
 
-# 13. Conclusion
+How to build a notification using NotificationCompat.
 
-The Android Login and Home Page application was successfully implemented using Kotlin and XML.
+How to display notifications using NotificationManagerCompat.
 
-The application provides a Login interface containing username, password, Login, Forgot Password, and Registration options. When the user enters the required information and clicks the Login button, the application navigates to the Home Activity using an Intent.
+How Android 13 and above handles notification permissions.
 
-The username is passed from the Login Activity to the Home Activity and displayed as a personalized welcome message.
+How a button click can trigger a notification.
 
-The experiment successfully demonstrates basic Android UI development, Activity navigation, and data passing between Activities without requiring a backend or database.
+How to verify notifications using the Android notification panel.
 
----
+How notification functionality can be integrated into an existing Android application.
 
-# 14. Student Details
+11. Conclusion
 
-**Name:** Isha Kumari  
-**USN:** 25MCAR0098  
-**Experiment:** 4 – Android Login and Home Page Navigation
+The Android Notification functionality was successfully implemented in the LoginApp application using Kotlin.
+
+A notification channel was created and notification permission was handled for Android 13 and above. A Show Notification button was added to the Home screen, allowing the user to trigger a notification.
+
+The notification was successfully displayed in the Android notification panel, demonstrating the basic working and implementation of Android Notifications.
+
+12. Student Details
+
+Name: Isha Kumari
+USN: 25MCAR0098
+Experiment: 5 – Android Notifications
